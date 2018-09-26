@@ -20,8 +20,6 @@ class Personagem {
         this.hp = 100;
         this.cor = "#fff";
         this.draw();
-        
-
     }
     
     checaColisao(Colidivel,posicao){
@@ -43,6 +41,7 @@ class Personagem {
             let colisaoDireita = this.x+this.largura+this.speed>=Colidivel.x && Colidivel.x>this.x;
             return colisaoDireita || colisaoCanvasDireita;
         }
+
         if(posicao == "esquerda" ){
             let colisaoEsquerda = this.x-this.speed<=Colidivel.x+Colidivel.largura && Colidivel.x<this.x;
             return colisaoEsquerda || colisaoCanvasEsquerda;
