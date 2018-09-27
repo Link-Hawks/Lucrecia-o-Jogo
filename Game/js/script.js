@@ -6,23 +6,14 @@
     //Define os personagens
     
     let botoes = new Teclas();
-    window.addEventListener("keydown",teclaApertada);
-    window.addEventListener("keyup",teclaSolta);
+    window.addEventListener("keydown",(e)=>botoes.teclaApertada(e.keyCode));
+    window.addEventListener("keyup",(e)=>botoes.teclaSolta(e.keyCode));
     let player1 = new Personagem("lucrecia",110,120,new Sprites("player1","socoEsticadoDireita"),3,350,150,"esquerda");
     let player2 = new Personagem("rosivaldo",60,120,new Sprites("player2"),3,150,140,"direita");
     let interface = new Interface("background");
     let ciclo = 0;
     loop();
-    
-    //esta função foi necessário pois se não a cada vez que o usuario apertasse algum botão seria acionada uma outra instância de Teclas.
-    function teclaApertada(e){
-        botoes.teclaApertada(e.keyCode);
-    }
-
-    function teclaSolta(e){
-        botoes.teclaSolta(e.keyCode);
-    }
-   
+       
     function update(){  
         if(player1.golpeSoco)
             player2.checarDano(player1);
