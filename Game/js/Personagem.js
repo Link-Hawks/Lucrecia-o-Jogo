@@ -186,8 +186,8 @@ class Personagem {
         ctx.strokeStyle = `#000`;
         ctx.strokeRect(this.x,this.y,this.spriteDraw.width,this.spriteDraw.height);
         ctx.fillStyle = this.cor;
-        ctx.fillText(`x: ${this.x,this.x,this.y-7}`);
-        ctx.fillText(`y: ${this.y,this.x,this.y-20}`);
+        ctx.fillText(`x: ${this.x}`,this.x,this.y-7);
+        ctx.fillText(`y: ${this.y}`,this.x,this.y-20);
         
     }
 
