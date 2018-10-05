@@ -1,7 +1,7 @@
 
 class Sprites{
 
-    constructor(diretorio,golpeEspecial1){
+    constructor(diretorio,golpeEspecial1Direita,golpeEspecial1Esquerda){
         this.img = new Image();
         this.diretorio = diretorio;
         this._esquerda = "img/"+diretorio+"/esquerda.png";
@@ -16,7 +16,8 @@ class Sprites{
         this._chuteDireita = "img/"+diretorio+"/chuteDireita.png";
         this._defesaEsquerda = ["img/"+diretorio+"/defesaEsquerda.png"];
         this._defesaDireita = "img/"+diretorio+"/defesaDireita.png";
-        this._golpeEspecial1 = "img/"+diretorio+"/"+golpeEspecial1+".png";
+        this._golpeEspecial1Direita = "img/"+diretorio+"/"+golpeEspecial1Direita+".png";
+        this._golpeEspecial1Esquerda = "img/"+diretorio+"/"+golpeEspecial1Esquerda+".png";
         this._golpeEspecial2 = ["img/"+diretorio+"/especial0.png","img/"+diretorio+"/especial1.png","img/"+diretorio+"/especial2.png","img/"+diretorio+"/especial3.png","img/"+diretorio+"/especial4.png"];
         this.count=0;
     }
@@ -147,13 +148,22 @@ class Sprites{
 
     // --------------------        Sprites de Golpes Especiais       --------------------------------- *
 
-    get golpeEspecial1(){
-        this.img.src = this._golpeEspecial1;
+    get golpeEspecial1Esquerda(){
+        this.img.src = this._golpeEspecial1Esquerda;
         return this.img;
     }
 
-    set golpeEspecial1(golpeEspecial1){
-        this._golpeEspecial1 = "img/"+this.diretorio+"/"+golpeEspecial1+".png";
+    set golpeEspecial1Esquerda(golpeEspecial1Direita){
+        this._golpeEspecial1Esquerda = "img/"+this.diretorio+"/"+golpeEspecial1Direita+".png";
+    }
+
+    get golpeEspecial1Direita(){
+        this.img.src = this._golpeEspecial1Direita;
+        return this.img;
+    }
+
+    set golpeEspecial1Direita(golpeEspecial2Esquerda){
+        this._golpeEspecial2Direita = "img/"+this.diretorio+"/"+golpeEspecialDireita+".png";
     }
 
     get golpeEspecial2(){

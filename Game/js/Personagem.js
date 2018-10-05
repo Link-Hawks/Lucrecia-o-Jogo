@@ -55,14 +55,15 @@ class Personagem {
     checarDano(Inimigo){
         let inimigoDireita = Inimigo.x > this.x && Inimigo.x<this.x+this.largura;
         let inimigoEsquerda = Inimigo.x+Inimigo.largura>this.x && Inimigo.x<this.x;
-        if(inimigoDireita){
+        if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
             this.hp-=5;
             if(this.checaColisao(Inimigo,"direita"))
-                this.x = Inimigo.x+Inimigo.largura+1;           
-        }else if(inimigoEsquerda ){
+                this.x = Inimigo.x-Inimigo.largura-4;           
+        }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
             this.hp-=5; 
             if(this.checaColisao(Inimigo,"esquerda")){
                 this.x = Inimigo.x+Inimigo.largura+1; 
+                this.xTemp = this.x;
                 console.log(this.nome+" || ")
             }
         }
@@ -77,8 +78,6 @@ class Personagem {
         if(this.hp<=0){
             this.hp = 0;
         }
-        
-        
     }
 
     zeraPosicao(){
@@ -90,21 +89,21 @@ class Personagem {
 
     movimentacao(orientacao,Colidivel){
 
-        if(orientacao == "direita"){
+        if(orientacao == "direita"&& !this.golpeSoco ){
             this.zeraPosicao();
             this.posicaoDireita = true;
             this.spriteDraw = this.sprite.direita;
             if(!this.checaColisao(Colidivel,"direita")){
                 this.cor = "#fff";
                 this.x+=this.speed;
+                this.andando = true;
                 this.xTemp = this.x;
-                
             }else{
                 this.cor = "firebrick";
             }
             
         }
-        if(orientacao == "esquerda"){
+        if(orientacao == "esquerda" && !this.golpeSoco){
             this.zeraPosicao();
             this.posicaoEsquerda = true;           
             this.spriteDraw = this.sprite.esquerda;
@@ -129,19 +128,23 @@ class Personagem {
 
     
     golpes(golpe){
-        if(golpe == "soco"){
+        if(golpe == "soco" ){
             this.golpeSoco = true;            
             this.spriteEsquerdaDireita(this.sprite.socoDireita.src,this.sprite.socoEsquerda.src);  
-            if(this.posicaoEsquerda && this.golpeSoco){
-                let intervalo=Math.abs(this.largura-74);
-                if(intervalo == 60)
-                    intervalo = 0;
+            if(this.posicaoEsquerda){
+                let intervalo=14;
+                if(this.x=this.xTemp-intervalo)
+                    intervalo = 0;            
                 this.x-=intervalo;
             }
         }
         if(golpe == "golpeEspecial1"){
             this.golpeEspecial1 = true;
-            this.spriteEsquerdaDireita(this.sprite.golpeEspecial1.src);  
+            this.spriteEsquerdaDireita(this.sprite.golpeEspecial1Direita.src,this.sprite.golpeEspecial1Esquerda.src);  
+            let intervalo2 = 71;
+            if(this.x==this.xTemp-intervalo2)
+                intervalo2 = 0;  
+           if(this.posicaoEsquerda)this.x-=intervalo2;  
         }
 
         if(golpe == "golpeEspecial2"){
@@ -171,6 +174,7 @@ class Personagem {
 
     retornarEstado(golpeSolto){
         golpeSolto = false;
+        this.golpeSoco = false;
         if(this.posicaoDireita)
             this.spriteDraw = this.sprite.direita;
         else if (this.posicaoEsquerda){

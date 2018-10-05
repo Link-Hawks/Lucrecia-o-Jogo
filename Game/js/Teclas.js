@@ -89,6 +89,7 @@ class Teclas{
     }
     teclaSolta(tecla){
         if(this.teclasDisponiveis.jogador1.soco.includes(tecla)){
+            player1.golpeSoco =false;
             player1.retornarEstado(player1.soco);
         }
         if(this.teclasDisponiveis.jogador1.baixo.includes(tecla)){
@@ -116,6 +117,7 @@ class Teclas{
 
 
         if(this.teclasDisponiveis.jogador2.soco.includes(tecla)){
+            player2.golpeSoco =false;
             player2.retornarEstado(player2.soco);
         }
         if(this.teclasDisponiveis.jogador2.baixo.includes(tecla)){

@@ -8,16 +8,13 @@
  */
 var haveEvents = 'GamepadEvent' in window;
 var controllers = {};
-var rAF = window.mozRequestAnimationFrame ||
-  window.webkitRequestAnimationFrame ||
-  window.requestAnimationFrame;
+var tempCiclo = 0;
 
 function connecthandler(e) {
   addgamepad(e.gamepad);
 }
 function addgamepad(gamepad) {
   controllers[gamepad.index] = gamepad;   
-  rAF(updateStatus);
 }
 
 function disconnecthandler(e) {
@@ -30,27 +27,77 @@ function removegamepad(gamepad) {
 
 function updateStatus() {
   scangamepads();
-  for (j in controllers) {
-    var controller = controllers[j];
-    for (var i=0; i<controller.buttons.length; i++) {
-      var val = controller.buttons[i];
-      var pressed = val == 1.0;
-      if (typeof(val) == "object") {
-        pressed = val.pressed;
-        val = val.value;
-      }
-    }
-
-    for (var i=0; i<controller.axes.length; i++) {
-      if(controller.axes[i]+1 == 2)
-      player1.x+=controller.axes[i];
-      if(controller.axes[i]+1 == 0)
-      player1.x+=controller.axes[i];
-    };
+  if(controllers[0].buttons[0].pressed){
+    player1.golpes("chute");
   }
-    
-  rAF(updateStatus);
-}
+  if(controllers[0].buttons[1].pressed){   
+    player1.golpes("defesa");   
+  }
+  if(controllers[0].buttons[2].pressed){    
+    player1.movimentacao("cima",player2)     
+  }
+  if(controllers[0].buttons[3].pressed){
+    player1.golpes("soco");       
+  }
+  if(controllers[0].buttons[4].pressed){
+    player1.golpes("golpeEspecial1");     
+  }
+  if(controllers[0].buttons[6].pressed)
+  player1.golpes("golpeEspecial2"); 
+
+  if(controllers[0].axes[0] == 1)
+    player1.movimentacao("direita",player2)
+  else if(controllers[0].axes[0] == -1){
+    player1.movimentacao("esquerda",player2);
+  }
+  if(controllers[0].axes[1] == 1)
+    player1.movimentacao("baixo",player2)
+  else if(controllers[0].axes[1] == -1)
+    player1.movimentacao("cima",player2)
+
+
+
+
+
+
+
+
+
+    if(controllers[1].buttons[0].pressed){
+      player2.golpes("chute");
+    }
+    if(controllers[1].buttons[1].pressed){   
+      player2.golpes("defesa");   
+    }
+    if(controllers[1].buttons[2].pressed){    
+      player2.movimentacao("cima",player1)     
+    }
+    if(controllers[1].buttons[3].pressed){
+      player2.golpes("soco");       
+    }
+    if(controllers[1].buttons[4].pressed){
+      player2.golpes("golpeEspecial1");     
+    }
+    if(controllers[1].buttons[6].pressed)
+    player2.golpes("golpeEspecial2"); 
+  
+    if(controllers[1].axes[0] == 1)
+      player2.movimentacao("direita",player1)
+    else if(controllers[1].axes[0] == -1){
+      player2.movimentacao("esquerda",player1);
+    }
+    if(controllers[0].axes[1] == 1)
+      player2.movimentacao("baixo",player1)
+    else if(controllers[0].axes[1] == -1)
+      player2.movimentacao("cima",player1)
+
+
+    if(ciclo - tempCiclo>=15 && !(controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed || controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed)){
+        player1.retornarEstado(player1.soco); 
+        player2.retornarEstado(player2.soco);
+        tempCiclo = ciclo;
+    }
+  }
 
 function scangamepads() {
   var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);

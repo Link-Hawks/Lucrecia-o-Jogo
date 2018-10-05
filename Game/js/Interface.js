@@ -6,6 +6,7 @@ class Interface{
         this._background = new Image();
         this._background.src = "img/"+background+".jpg";
         this.hud = new Hud();
+        
     }
 
     drawContador(){
