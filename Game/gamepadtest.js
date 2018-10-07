@@ -45,6 +45,11 @@ function updateStatus() {
   if(controllers[0].buttons[6].pressed)
   player1.golpes("golpeEspecial2"); 
 
+  if(controllers[0].buttons[9].pressed){
+    console.log("apertou")
+    iniciou = true;
+  }
+
   if(controllers[0].axes[0] == 1)
     player1.movimentacao("direita",player2)
   else if(controllers[0].axes[0] == -1){
@@ -80,7 +85,11 @@ function updateStatus() {
     }
     if(controllers[1].buttons[6].pressed)
     player2.golpes("golpeEspecial2"); 
-  
+
+    
+    if(controllers[1].buttons[9].pressed)
+      iniciou = true;
+
     if(controllers[1].axes[0] == 1)
       player2.movimentacao("direita",player1)
     else if(controllers[1].axes[0] == -1){
@@ -92,10 +101,16 @@ function updateStatus() {
       player2.movimentacao("cima",player1)
 
 
-    if(ciclo - tempCiclo>=15 && !(controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed || controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed)){
+    var player1BotaoApertado = (controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed );
+    var player2BotaoApertado = (controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed)
+
+
+    if(ciclo - tempCiclo>=4 ){
+      if(!player1BotaoApertado)
         player1.retornarEstado(player1.soco); 
+    if(!player2BotaoApertado)
         player2.retornarEstado(player2.soco);
-        tempCiclo = ciclo;
+      tempCiclo = ciclo;
     }
   }
 

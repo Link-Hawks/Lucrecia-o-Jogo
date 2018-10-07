@@ -9,6 +9,7 @@ class Personagem {
         this.x = xInicial;
         this.y = yInicial;
         this.xTemp = this.x;
+        this.apertadoSoco = true;
         if(posInicial == "direita"){
             this.posicaoDireita = true;
             this.spriteDraw = this.sprite.direita;
@@ -55,28 +56,43 @@ class Personagem {
     checarDano(Inimigo){
         let inimigoDireita = Inimigo.x > this.x && Inimigo.x<this.x+this.largura;
         let inimigoEsquerda = Inimigo.x+Inimigo.largura>this.x && Inimigo.x<this.x;
-        if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
-            this.hp-=5;
-            if(this.checaColisao(Inimigo,"direita"))
-                this.x = Inimigo.x-Inimigo.largura-4;           
-        }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
-            this.hp-=5; 
-            if(this.checaColisao(Inimigo,"esquerda")){
-                this.x = Inimigo.x+Inimigo.largura+1; 
-                this.xTemp = this.x;
-                console.log(this.nome+" || ")
+        if(Inimigo.apertadoSoco && (inimigoDireita||inimigoEsquerda)){
+           
+            if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
+                if(!this.defesa){
+                    this.hp-=5;
+                }
+                if(this.checaColisao(Inimigo,"direita")){
+                    
+                    if(this.golpeSoco)                    
+                    this.x = Inimigo.x-Inimigo.largura+15; 
+                    else
+                    this.x = Inimigo.x-Inimigo.largura+15; 
+                }          
+            }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
+               
+                if(!this.defesa){
+                    this.hp-=5;
+                }
+                if(this.checaColisao(Inimigo,"esquerda")){
+                    if(this.golpeSoco)     
+                    this.x = Inimigo.x+Inimigo.largura+1+intervalo; 
+                    else
+                    this.x = Inimigo.x+Inimigo.largura+1; 
+                    this.xTemp = this.x;
+                    console.log(this.nome+" || ")
+                }
             }
-        }
-        if(inimigoDireita || inimigoEsquerda){
-            
             var audio = document.createElement("audio");
             audio.setAttribute("src","punch.mp3");
             audio.play();
-        }
+            
+            Inimigo.apertadoSoco = false;
 
-        //Temporario
-        if(this.hp<=0){
-            this.hp = 0;
+            //Temporario
+            if(this.hp<=0){
+                this.hp = 0;
+            }
         }
     }
 
@@ -89,7 +105,7 @@ class Personagem {
 
     movimentacao(orientacao,Colidivel){
 
-        if(orientacao == "direita"&& !this.golpeSoco ){
+        if(orientacao == "direita"&& !this.golpeSoco && !this.golpeEspecial1 ){
             this.zeraPosicao();
             this.posicaoDireita = true;
             this.spriteDraw = this.sprite.direita;
@@ -103,7 +119,7 @@ class Personagem {
             }
             
         }
-        if(orientacao == "esquerda" && !this.golpeSoco){
+        if(orientacao == "esquerda" && !this.golpeSoco  && !this.golpeEspecial1){
             this.zeraPosicao();
             this.posicaoEsquerda = true;           
             this.spriteDraw = this.sprite.esquerda;
@@ -129,10 +145,11 @@ class Personagem {
     
     golpes(golpe){
         if(golpe == "soco" ){
-            this.golpeSoco = true;            
+            this.golpeSoco = true;   
             this.spriteEsquerdaDireita(this.sprite.socoDireita.src,this.sprite.socoEsquerda.src);  
             if(this.posicaoEsquerda){
-                let intervalo=14;
+                
+            intervalo=14;
                 if(this.x=this.xTemp-intervalo)
                     intervalo = 0;            
                 this.x-=intervalo;
@@ -181,6 +198,9 @@ class Personagem {
             this.x=this.xTemp;
             this.spriteDraw = this.sprite.esquerda;
         }
+        this.apertadoSoco = true;
+        this.defesa = false;
+        this.golpeEspecial1 = false;
     }
    
     draw(){        

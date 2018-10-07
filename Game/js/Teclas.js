@@ -34,6 +34,10 @@ class Teclas{
     }
 
     teclaApertada(tecla){
+        if(tecla == 13){
+            iniciou = true;
+        }
+
         // -------------------- JOGADOR 1 --------------
         if(this.teclasDisponiveis.jogador1.direita.includes(tecla)){
             player1.movimentacao("direita",player2)
