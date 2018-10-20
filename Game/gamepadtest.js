@@ -8,7 +8,7 @@
  */
 var haveEvents = 'GamepadEvent' in window;
 var controllers = {};
-var tempCiclo = 0;
+var tempCiclo;
 
 function connecthandler(e) {
   addgamepad(e.gamepad);
@@ -95,14 +95,14 @@ function updateStatus() {
     else if(controllers[1].axes[0] == -1){
       player2.movimentacao("esquerda",player1);
     }
-    if(controllers[0].axes[1] == 1)
+    if(controllers[1].axes[1] == 1)
       player2.movimentacao("baixo",player1)
-    else if(controllers[0].axes[1] == -1)
+    else if(controllers[1].axes[1] == -1)
       player2.movimentacao("cima",player1)
 
 
-    var player1BotaoApertado = (controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed );
-    var player2BotaoApertado = (controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed)
+    var player1BotaoApertado = (controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed || controllers[0].axes[1] == 1);
+    var player2BotaoApertado = (controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed || controllers[1].axes[1] == 1)
 
 
     if(ciclo - tempCiclo>=4 ){

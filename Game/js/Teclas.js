@@ -100,6 +100,7 @@ class Teclas{
             player1.retornarEstado(player1.baixo);
         }
         if(this.teclasDisponiveis.jogador1.cima.includes(tecla)){
+            
             player1.retornarEstado(player1.cima);
         }
         if(this.teclasDisponiveis.jogador1.chute.includes(tecla)){

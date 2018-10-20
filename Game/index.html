@@ -1,9 +1,22 @@
 <html>
     <head>
         <title>Ultimate Robot Game</title>
+        <link rel="icon" href="icon2.png">
+        <style>
+            @font-face {
+                font-family: "Joystix Monospace";
+                src: url(sansation_light.woff);
+            }
+            .botao{
+                font-family: "Joystix Monospace";
+                background:#0bf15a;
+                padding:7px 15px;
+                border: none;
+            }
+        </style>
     </head>
-    <body>
-        <center><canvas id="canvas" width="700px" height="300px" style="border:1px solid #333"></canvas></center>
+    <body bgcolor="#333">
+        <center><canvas id="canvas" width="700px" height="300px" style="border:5px solid;background:black;border-color:dimgray;border-radius:5px"></canvas></center>
         <script>
               /**
                  * Atualização focada em melhora de código.
@@ -58,7 +71,9 @@
                  * @author Renan
                 */
         </script>
-        
+        <script>
+        </script><br>
+        <center><input type="submit" value="Carregar o Jogo" onclick="init()"id="carregar" class="botao"></center>
         <script type="text/javascript" src="gamepadtest.js"></script>
         <script src="js/Personagem.js"></script>
         <script src="js/Teclas.js"></script>

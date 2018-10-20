@@ -3,9 +3,11 @@ class Personagem {
     constructor(nome,largura,altura,sprites,velocidade,xInicial,yInicial,posInicial) {
         this.nome = nome;
         this.largura = largura;
+        this.larguraInicial = largura;
         this.altura = altura;
         this.sprite = sprites;
         this.spriteDraw = new Image();
+        this.yInicial = yInicial;
         this.x = xInicial;
         this.y = yInicial;
         this.xTemp = this.x;
@@ -39,7 +41,9 @@ class Personagem {
         }
 
         if(posicao == "direita"){
-            let colisaoDireita = this.x+this.largura+this.speed>=Colidivel.x && Colidivel.x>this.x;
+            console.log(Colidivel.x+"Valor de X");
+            console.log(Colidivel.xTemp+"Valor de XTemp");
+            let colisaoDireita = this.x+this.largura+this.speed>=Colidivel.xTemp && Colidivel.xTemp>this.x;
             return colisaoDireita || colisaoCanvasDireita;
         }
 
@@ -54,31 +58,46 @@ class Personagem {
     }
 
     checarDano(Inimigo){
-        let inimigoDireita = Inimigo.x > this.x && Inimigo.x<this.x+this.largura;
-        let inimigoEsquerda = Inimigo.x+Inimigo.largura>this.x && Inimigo.x<this.x;
+        let inimigoDireita = Inimigo.xTemp > this.x && Inimigo.x<this.x+this.largura && Inimigo.posicaoEsquerda;
+        let inimigoEsquerda = Inimigo.x+Inimigo.largura>this.x && Inimigo.x<this.x && Inimigo.posicaoDireita;
         if(Inimigo.apertadoSoco && (inimigoDireita||inimigoEsquerda)){
            
             if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
-                if(!this.defesa){
+                if(!this.defesa && !this.posicaoBaixo){
                     this.hp-=5;
                 }
-                if(this.checaColisao(Inimigo,"direita")){
-                    
-                    if(this.golpeSoco)                    
-                    this.x = Inimigo.x-Inimigo.largura+15; 
-                    else
-                    this.x = Inimigo.x-Inimigo.largura+15; 
-                }          
+                    console.log("personagem"+this.nome+"xtemp: "+this.xTemp)
+                    if(!this.checaColisao(null,"canvasEsquerda")){
+                        if(this.golpeEspecial1)           
+                            this.xTemp = this.x-80; 
+                        else if(this.golpeSoco)   
+                            this.xTemp = this.x-11; 
+                        else if(this.posicaoDireita && Inimigo.golpeEspecial1)    
+                            this.x = Inimigo.x-Inimigo.largura;
+                        else if(this.posicaoEsquerda && Inimigo.golpeEspecial1)
+                            this.xTemp = Inimigo.x-Inimigo.largura;
+                        else if(this.posicaoEsquerda)
+                            this.xTemp = this.x-5
+                        else
+                            this.x = this.x-5
+                        
+                    }
+                         
             }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
                
                 if(!this.defesa){
                     this.hp-=5;
-                }
-                if(this.checaColisao(Inimigo,"esquerda")){
+                }                
+                if(!this.checaColisao(null,"canvasDireita")){
                     if(this.golpeSoco)     
-                    this.x = Inimigo.x+Inimigo.largura+1+intervalo; 
+                        this.x = this.x+18; 
+                    else if (this.golpeEspecial1)
+                        this.x = this.x+18
+                    else if(Inimigo.golpeEspecial1)
+                        this.x = Inimigo.x+145; //145 é o tamanho do golpe especial
                     else
-                    this.x = Inimigo.x+Inimigo.largura+1; 
+                        this.x = this.x+5
+
                     this.xTemp = this.x;
                     console.log(this.nome+" || ")
                 }
@@ -108,27 +127,22 @@ class Personagem {
         if(orientacao == "direita"&& !this.golpeSoco && !this.golpeEspecial1 ){
             this.zeraPosicao();
             this.posicaoDireita = true;
-            this.spriteDraw = this.sprite.direita;
-            if(!this.checaColisao(Colidivel,"direita")){
-                this.cor = "#fff";
-                this.x+=this.speed;
-                this.andando = true;
-                this.xTemp = this.x;
-            }else{
-                this.cor = "firebrick";
-            }
+            if(!this.posicaoBaixo)
+                this.spriteDraw = this.sprite.direita;
+                if(!this.checaColisao(null,"canvasDireita")){
+                    this.x+=this.speed;
+                    this.xTemp = this.x;
+                }
+           
             
         }
         if(orientacao == "esquerda" && !this.golpeSoco  && !this.golpeEspecial1){
             this.zeraPosicao();
             this.posicaoEsquerda = true;           
             this.spriteDraw = this.sprite.esquerda;
-            if(!this.checaColisao(Colidivel,"esquerda")){
-                this.cor = "#fff";
+            if(!this.checaColisao(null,"canvasEsquerda")){
                 this.x-=this.speed;
                 this.xTemp = this.x;
-            } else{
-                this.cor = "firebrick";
             }
         }
         if(orientacao == "baixo"){
@@ -137,31 +151,40 @@ class Personagem {
             
         }
         if(orientacao == "cima"){
-            this.posicaoCima = true;            
+            this.posicaoCima = true;  
+           if(this.y-this.speed>100 && !this.caindo){
+                this.y-=this.speed;
+           }else{
+               this.caindo = true;
+           } 
             this.spriteEsquerdaDireita(this.sprite.puloDireita.src,this.sprite.puloEsquerda.src);  
         }
     }
 
     
     golpes(golpe){
-        if(golpe == "soco" ){
+        if(golpe == "soco" && !this.golpeEspecial1 ){
             this.golpeSoco = true;   
             this.spriteEsquerdaDireita(this.sprite.socoDireita.src,this.sprite.socoEsquerda.src);  
             if(this.posicaoEsquerda){
                 
-            intervalo=14;
+            intervalo=19;
                 if(this.x=this.xTemp-intervalo)
                     intervalo = 0;            
                 this.x-=intervalo;
-            }
+                this.largura = this.sprite.socoEsquerda.width-25;
+            }else
+                this.largura = this.sprite.socoDireita.width-16;
         }
-        if(golpe == "golpeEspecial1"){
+        if(golpe == "golpeEspecial1" && !this.golpeSoco){
             this.golpeEspecial1 = true;
             this.spriteEsquerdaDireita(this.sprite.golpeEspecial1Direita.src,this.sprite.golpeEspecial1Esquerda.src);  
             let intervalo2 = 71;
             if(this.x==this.xTemp-intervalo2)
                 intervalo2 = 0;  
-           if(this.posicaoEsquerda)this.x-=intervalo2;  
+           if(this.posicaoEsquerda)
+                this.x-=intervalo2;  
+
         }
 
         if(golpe == "golpeEspecial2"){
@@ -192,26 +215,38 @@ class Personagem {
     retornarEstado(golpeSolto){
         golpeSolto = false;
         this.golpeSoco = false;
-        if(this.posicaoDireita)
+        if(this.posicaoDireita && !this.posicaoCima)
             this.spriteDraw = this.sprite.direita;
-        else if (this.posicaoEsquerda){
+        else if (this.posicaoEsquerda  && !this.posicaoCima){
             this.x=this.xTemp;
             this.spriteDraw = this.sprite.esquerda;
         }
         this.apertadoSoco = true;
         this.defesa = false;
         this.golpeEspecial1 = false;
+        this.posicaoCima = false;
+        this.posicaoBaixo = false;
+        if(this.y<this.yInicial && (this.caindo || !this.posicaoCima)){
+            console.log(this.y);
+            this.y+=6;
+        }else{
+            this.caindo = false;
+        }
     }
    
-    draw(){        
-        this.largura = this.spriteDraw.width;
-        this.altura = this.spriteDraw.height;     
-        ctx.drawImage(this.spriteDraw,this.x,this.y,this.largura,this.altura);
+    draw(){       
+        if(!this.golpeSoco){
+            this.largura = this.larguraInicial;
+        }
+        if(this.golpeEspecial1){
+            this.largura = this.spriteDraw.width;
+        }
+        ctx.drawImage(this.spriteDraw,this.x,this.y,this.spriteDraw.width,this.spriteDraw.height);
         ctx.strokeStyle = `#000`;
-        ctx.strokeRect(this.x,this.y,this.spriteDraw.width,this.spriteDraw.height);
+       // ctx.strokeRect(this.x,this.y,this.largura,this.altura);
         ctx.fillStyle = this.cor;
-        ctx.fillText(`x: ${this.x}`,this.x,this.y-7);
-        ctx.fillText(`y: ${this.y}`,this.x,this.y-20);
+        //ctx.fillText(`x: ${this.x}`,this.x,this.y-7);
+        //ctx.fillText(`y: ${this.y}`,this.x,this.y-20);
         
     }
 
