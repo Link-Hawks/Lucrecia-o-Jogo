@@ -24,16 +24,16 @@
     start2.src = "start2.png";
 
     var mortoEsquerda= new Image();
-    mortoEsquerda.src = "img/Player2/mortoEsquerda.png";
+    mortoEsquerda.src = "img/player2/mortoEsquerda.png";
 
     var mortoDireita= new Image();
-    mortoDireita.src = "img/Player2/mortoDireita.png";
+    mortoDireita.src = "img/player2/mortoDireita.png";
 
     var mortoEsquerda1= new Image();
-    mortoEsquerda1.src = "img/Player1/mortoEsquerda.png";
+    mortoEsquerda1.src = "img/player1/mortoEsquerda.png";
 
     var mortoDireita1= new Image();
-    mortoDireita1.src = "img/Player1/mortoDireita.png";
+    mortoDireita1.src = "img/player1/mortoDireita.png";
 
 
 
@@ -58,15 +58,23 @@
     let player2;  
     let interfacea; 
     var ciclo;
-    
+    let usandoJoystick;
+    function joystick(){
+        usandoJoystick = true;
+        scriptJoystick = document.createElement("script");
+        scriptJoystick.src = "gamepadtest.js";
+        document.body.appendChild(scriptJoystick);
+        scriptJoystick.onload = ()=>init();
+    }
     
        
     function init(){
-        player1 = new Personagem("Player 1",40,100,new Sprites("player1","socoEsticadoDireita","socoEsticadoEsquerda"),3,150,155,"direita");
+        player1 = new Personagem("Player 1",30,100,new Sprites("player1","socoEsticadoDireita","socoEsticadoEsquerda"),3,150,155,"direita");
         player2 = new Personagem("Player 2",50,113,new Sprites("player2","socoEsticadoDireita","socoEsticadoEsquerda"),3,350,140,"esquerda");
         interfacea = new Interface("background");
         ciclo = 0;
-        document.querySelector("#carregar").setAttribute("style","display:none");
+        document.querySelector("#joystick").setAttribute("style","display:none");
+        document.querySelector("#teclado").setAttribute("style","display:none");
         window.addEventListener("keydown",(e)=>botoes.teclaApertada(e.keyCode));
         window.addEventListener("keyup",(e)=>botoes.teclaSolta(e.keyCode));
         startMP3.setAttribute("src","start.mp3");
@@ -86,7 +94,12 @@
     }
 
     function update(){  
-        updateStatus();
+        if(usandoJoystick)
+            updateStatus();
+        else{
+            player1.speed = 8;
+            player2.speed = 8;     
+        }
         if(player1.golpeSoco)
             player2.checarDano(player1);
         if(player2.golpeSoco)
@@ -94,7 +107,18 @@
         if(player1.golpeEspecial1)
             player2.checarDano(player1);  
         if(player2.golpeEspecial1)
-            player1.checarDano(player2);  
+            player1.checarDano(player2);
+        if(player1.golpeChute)
+            player2.checarDano(player1);  
+        if(player2.golpeChute)
+            player1.checarDano(player2);
+    }
+
+    function selecionarModo(){
+        document.querySelector("#restart").setAttribute("style","display:none");
+        document.querySelector("#joystick").removeAttribute("style");
+        document.querySelector("#teclado").removeAttribute("style");
+
     }
     
     function draw(){
@@ -113,7 +137,8 @@
                 ctx.clearRect(0,0,cnv.width,cnv.height);
                 ctx.drawImage(start2,0,-50);
             }
-            updateStatus();           
+            if(usandoJoystick)
+                updateStatus();           
             contador3++;
             window.requestAnimationFrame(loop,cnv);
         }else{
@@ -174,7 +199,7 @@
                     died.setAttribute("src","died.mp3");
                     died.play()
                 },1000)
-                setTimeout(()=>document.querySelector("#carregar").removeAttribute("style"),2000);
+                setTimeout(()=>document.querySelector("#restart").removeAttribute("style"),2000);
             }
     }
     }

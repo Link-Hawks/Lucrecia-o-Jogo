@@ -101,14 +101,26 @@ function updateStatus() {
       player2.movimentacao("cima",player1)
 
 
+    let player1BotaoEspecial1 = controllers[0].buttons[4].pressed;
+    let player2BotaoEspecial1 = controllers[1].buttons[4].pressed;
+
     var player1BotaoApertado = (controllers[0].buttons[0].pressed || controllers[0].buttons[1].pressed || controllers[0].buttons[2].pressed || controllers[0].buttons[3].pressed || controllers[0].buttons[4].pressed || controllers[0].axes[1] == 1);
     var player2BotaoApertado = (controllers[1].buttons[0].pressed || controllers[1].buttons[1].pressed || controllers[1].buttons[2].pressed || controllers[1].buttons[3].pressed || controllers[1].buttons[4].pressed || controllers[1].axes[1] == 1)
 
 
+
     if(ciclo - tempCiclo>=4 ){
+      if(!player1BotaoEspecial1 && player1.posicaoCima){          
+        player1.x=player1.xTemp
+      }
+      if(!player2BotaoEspecial1 && player2.posicaoCima){          
+        player2.x=player2.xTemp
+      }
       if(!player1BotaoApertado)
+        
         player1.retornarEstado(player1.soco); 
     if(!player2BotaoApertado)
+        
         player2.retornarEstado(player2.soco);
       tempCiclo = ciclo;
     }

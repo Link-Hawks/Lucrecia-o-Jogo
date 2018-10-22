@@ -73,13 +73,18 @@
         </script>
         <script>
         </script><br>
-        <center><input type="submit" value="Carregar o Jogo" onclick="init()"id="carregar" class="botao"></center>
-        <script type="text/javascript" src="gamepadtest.js"></script>
+        <center>
+            <input type="submit" value="Teclado" onclick="init()"id="teclado" class="botao">
+            <input type="submit" value="Joystick" onclick="joystick()"id="joystick" class="botao">
+            <input type="submit" value="Restart" onclick="selecionarModo()" style="display: none" id = "restart" class="botao">
+        </center>
+        
         <script src="js/Personagem.js"></script>
         <script src="js/Teclas.js"></script>
         <script src="js/Interface.js"></script>
         <script src="js/Hud.js"></script>
         <script src="js/Sprites.js"></script>
+        <script src="gamepadtest.js"></script>
         <script src="js/script.js"></script>
     </body>
 </html>

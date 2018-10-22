@@ -62,30 +62,32 @@ class Personagem {
         let inimigoEsquerda = Inimigo.x+Inimigo.largura>this.x && Inimigo.x<this.x && Inimigo.posicaoDireita;
         if(Inimigo.apertadoSoco && (inimigoDireita||inimigoEsquerda)){
            
-            if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
-                if(!this.defesa && !this.posicaoBaixo){
+            if(inimigoDireita && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco || Inimigo.golpeChute)){
+                if(!this.defesa && (!this.posicaoBaixo && Inimigo.golpeChute)){
                     this.hp-=5;
                 }
                     console.log("personagem"+this.nome+"xtemp: "+this.xTemp)
                     if(!this.checaColisao(null,"canvasEsquerda")){
                         if(this.golpeEspecial1)           
-                            this.xTemp = this.x-80; 
+                            this.xTemp = this.x-60; 
                         else if(this.golpeSoco)   
                             this.xTemp = this.x-11; 
                         else if(this.posicaoDireita && Inimigo.golpeEspecial1)    
                             this.x = Inimigo.x-Inimigo.largura;
                         else if(this.posicaoEsquerda && Inimigo.golpeEspecial1)
                             this.xTemp = Inimigo.x-Inimigo.largura;
-                        else if(this.posicaoEsquerda)
-                            this.xTemp = this.x-5
+                        else if(this.posicaoEsquerda){
+                            this.x = this.xTemp-20
+                            this.xTemp = this.x;
+                        }
                         else
-                            this.x = this.x-5
+                            this.x = this.x-10
                         
                     }
                          
-            }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco)){
+            }else if(inimigoEsquerda && (Inimigo.golpeEspecial1 || Inimigo.golpeSoco || Inimigo.golpeChute)){
                
-                if(!this.defesa){
+                if(!this.defesa && (!this.posicaoBaixo && Inimigo.golpeChute)){
                     this.hp-=5;
                 }                
                 if(!this.checaColisao(null,"canvasDireita")){
@@ -102,16 +104,14 @@ class Personagem {
                     console.log(this.nome+" || ")
                 }
             }
+
+            
             var audio = document.createElement("audio");
             audio.setAttribute("src","punch.mp3");
             audio.play();
             
             Inimigo.apertadoSoco = false;
 
-            //Temporario
-            if(this.hp<=0){
-                this.hp = 0;
-            }
         }
     }
 
@@ -150,41 +150,49 @@ class Personagem {
             this.spriteEsquerdaDireita(this.sprite.baixoDireita.src,this.sprite.baixoEsquerda.src); 
             
         }
-        if(orientacao == "cima"){
+        if(orientacao == "cima" && !this.golpeEspecial1){
             this.posicaoCima = true;  
            if(this.y-this.speed>100 && !this.caindo){
                 this.y-=this.speed;
            }else{
-               this.caindo = true;
+               this.caindo = true;''
            } 
             this.spriteEsquerdaDireita(this.sprite.puloDireita.src,this.sprite.puloEsquerda.src);  
         }
     }
 
-    
+    desce(){
+        if(this.y<this.yInicial){    
+            this.y+=this.speed;
+        }
+    }
+
+    retornaIntervalo(){
+        let intervalo2 = 71;
+        if(this.x==this.xTemp-intervalo2)
+            intervalo2 = 0;  
+        if(this.posicaoEsquerda)
+            this.x-=intervalo2; 
+    }
+
     golpes(golpe){
-        if(golpe == "soco" && !this.golpeEspecial1 ){
+        if(golpe == "soco" && !this.golpeEspecial1){
             this.golpeSoco = true;   
             this.spriteEsquerdaDireita(this.sprite.socoDireita.src,this.sprite.socoEsquerda.src);  
-            if(this.posicaoEsquerda){
-                
-            intervalo=19;
+            if(this.posicaoEsquerda){                
+                let intervalo=19;
                 if(this.x=this.xTemp-intervalo)
                     intervalo = 0;            
                 this.x-=intervalo;
                 this.largura = this.sprite.socoEsquerda.width-25;
             }else
-                this.largura = this.sprite.socoDireita.width-16;
+                this.largura = this.sprite.socoDireita.width-16;            
         }
         if(golpe == "golpeEspecial1" && !this.golpeSoco){
             this.golpeEspecial1 = true;
             this.spriteEsquerdaDireita(this.sprite.golpeEspecial1Direita.src,this.sprite.golpeEspecial1Esquerda.src);  
-            let intervalo2 = 71;
-            if(this.x==this.xTemp-intervalo2)
-                intervalo2 = 0;  
-           if(this.posicaoEsquerda)
-                this.x-=intervalo2;  
-
+            this.retornaIntervalo();
+        
         }
 
         if(golpe == "golpeEspecial2"){
@@ -202,6 +210,8 @@ class Personagem {
             this.spriteEsquerdaDireita(this.sprite.defesaDireita.src,this.sprite.defesaEsquerda.src);
             
         }
+
+        this.desce();
     }
 
     spriteEsquerdaDireita(direita,esquerda){
@@ -209,6 +219,15 @@ class Personagem {
             this.spriteDraw.src = direita;
         }else if(this.posicaoEsquerda){
             this.spriteDraw.src = esquerda;
+        }
+    }
+
+    cai(){
+        if(this.y<this.yInicial && (this.caindo || !this.posicaoCima)){
+            console.log(this.y);
+            this.y+=6;
+        }else{
+            this.caindo = false;
         }
     }
 
@@ -226,12 +245,8 @@ class Personagem {
         this.golpeEspecial1 = false;
         this.posicaoCima = false;
         this.posicaoBaixo = false;
-        if(this.y<this.yInicial && (this.caindo || !this.posicaoCima)){
-            console.log(this.y);
-            this.y+=6;
-        }else{
-            this.caindo = false;
-        }
+        this.golpeChute = false;
+        this.cai();
     }
    
     draw(){       

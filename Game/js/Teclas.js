@@ -17,9 +17,10 @@ class Teclas{
                 esquerda: [100],
                 cima: [104],
                 baixo: [98],
-                soco: [73],
-                chute: [79],
-                defesa: [80]
+                soco: [85],
+                chute: [73],
+                defesa: [79],
+                especial1: [80]
             },
             menuInicial: {
 
@@ -111,6 +112,7 @@ class Teclas{
         }
 
         if(this.teclasDisponiveis.jogador1.especial1.includes(tecla)){ 
+            player1.x = player1.xTemp;
             player1.retornarEstado();
         }
         if(this.teclasDisponiveis.jogador1.especial2.includes(tecla)){ 
@@ -137,6 +139,11 @@ class Teclas{
         if(this.teclasDisponiveis.jogador2.defesa.includes(tecla)){
             player2.retornarEstado();
         }
+        if(this.teclasDisponiveis.jogador2.especial1.includes(tecla)){ 
+            player2.x = player2.xTemp;
+            player2.retornarEstado();
+        }
+        
     }
 }
 
