@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        
+        <link rel="icon" type="imagem/png" href="img/lucicon.png"/>
+        <meta charset="utf-8" />
+        <title>Turminha da Lulu</title>
+        <link rel="stylesheet" type="text/css" href="style/estilo.css"> 
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+        <style>
+            #pagina{
+                height: 500px;
+            } 
+            
+            @media (min-width:600px){
+                #pagina { 
+                    height: 895px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="pagina">
+            <div id="topo">
+                <center> 
+                    <a href="index.html">
+                        <img src="img/logomenustkless.png" /> 
+                    </a>
+                </center>
+            </div>
+            <div id="menu">
+                <ul>
+                    <a href="descricao.html"><li>SOBRE</li></a>
+                    <a href="lucrecia.html"><li>LUCRÉCIA</li></a>
+                    <a href="integrantes.html"><li>INTEGRANTES</li></a>
+                    <a href="jogo.html"><li>JOGO</li></a>
+                </ul>
+            </div>
+            <div id="conteudoJogo">
+                <div id="Instrucoes">
+                    <h2 id= "tituloJogo">Instruções</h2>
+                    <hr class="linha">
+                    <p style="text-align: center; padding:10px 0px">Jogue pelo controle ou pelo teclado!</p>
+                    <hr class="linha">
+                    <div id="keyboard" style="display: none">
+                        <div id="textoPersonagem1">
+                            <h3 id= "tituloJogo" >Personagem 1: Teclado</h3>
+                            <p>No teclado as setas controlam o personagem 1.<br> A tecla "Z" ativa o golpe de soco,<br> a tecla "X" ativa o chute,<br> a tecla "C" ativa a defesa,<br> e a tecla "Ctrl" ativa o golpe especial</p>
+                        </div>
+                        <div id="textoPersonagem2">
+                            <h3 id= "tituloJogo">Personagem 2: Teclado</h3>
+                            <p>No teclado as setas do teclado numérico controlam o personagem 2.<br> A tecla "U" ativa o golpe de soco,<br> a tecla "I" ativa o chute,<br> a tecla "O" ativa a defesa,<br> e a tecla "P" ativa o golpe especial</p>
+                        </div>
+                    </div>
+                    <div id= "controle"style="display: none">
+                        <div id="textoPersonagem1">
+                            <h3 id= "tituloJogo" >Personagem 1: Joystick</h3>
+                            <p>No joystick as setas controlam o personagem 1.<br> O botão "Y" ativa o golpe de soco,<br> O boão "X" ativa o chute,<br> O botão "A" ativa a defesa,<br> O botão "B" ativa o salto<br> O "gatilho esquerdo" ativa o golpe especial</p>
+                        </div>
+
+                        <div id="textoPersonagem2">
+                            <h3 id= "tituloJogo" >Personagem 2: Joystick</h3>
+                            <p>No joystick as setas controlam o personagem 2.<br> O botão "Y" ativa o golpe de soco,<br> O boão "X" ativa o chute,<br> O botão "A" ativa a defesa,<br> O botão "B" ativa o salto<br> O "gatilho esquerdo" ativa o golpe especial</p>
+                        </div>
+                </div>
+                <div id="jogo">
+                    <center>
+                        <canvas id="canvas" width="700px" height="300px"></canvas>
+                    </center>
+                    <script>
+                    </script><br>
+                    <center>
+                        <input type="submit" value="Teclado" onclick="init()"id="teclado" class="botao">
+                        <input type="submit" value="Joystick" onclick="joystick()"id="joystick" class="botao">
+                        <input type="submit" value="Restart" onclick="selecionarModo()" style="display: none" id = "restart" class="botao">
+                    </center>
+
+                    <script src="js/Personagem.js"></script>
+                    <script src="js/Teclas.js"></script>
+                    <script src="js/Interface.js"></script>
+                    <script src="js/Hud.js"></script>
+                    <script src="js/Sprites.js"></script>
+                    <script src="gamepadtest.js"></script>
+                    <script src="js/script.js"></script>
+                </div>
+            </div>
+        </div>
+    </body>
+
+
+    
+</html>
