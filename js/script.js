@@ -15,16 +15,16 @@
     start2.src = "start2.png";
 
     var mortoEsquerda= new Image();
-    mortoEsquerda.src = "img/player2/mortoEsquerda.png";
+    mortoEsquerda.src = "img/game/player2/mortoEsquerda.png";
 
     var mortoDireita= new Image();
-    mortoDireita.src = "img/player2/mortoDireita.png";
+    mortoDireita.src = "img/game/player2/mortoDireita.png";
 
     var mortoEsquerda1= new Image();
-    mortoEsquerda1.src = "img/player1/mortoEsquerda.png";
+    mortoEsquerda1.src = "img/game/player1/mortoEsquerda.png";
 
     var mortoDireita1= new Image();
-    mortoDireita1.src = "img/player1/mortoDireita.png";
+    mortoDireita1.src = "img/game/player1/mortoDireita.png";
 
     vitoriaPlayer2 = new Image();
     vitoriaPlayer2.src = "mito.png";
@@ -37,11 +37,11 @@
     var tocarIniciou;
     
     var morreu = document.createElement("audio");
-    morreu.setAttribute("src","morreu.mp3");
+    morreu.setAttribute("src","Musics/morreu.mp3");
     var i;
     var contador3;
     var bgm = document.createElement("audio");
-    bgm.setAttribute("src","Guren.mp3");
+    bgm.setAttribute("src","Musics/Guren.mp3");
 
     
     var startMP3 = document.createElement("audio");
@@ -72,7 +72,7 @@
         document.querySelector("#joystick").setAttribute("style","display:none");
         document.querySelector("#teclado").setAttribute("style","display:none");
        
-        startMP3.setAttribute("src","start.mp3");
+        startMP3.setAttribute("src","Musics/start.mp3");
         startMP3.loop = true;
         startMP3.volume = 0.3;
         startMP3.play();
@@ -200,7 +200,7 @@
                     ctx.clearRect(0,0,cnv.width,cnv.height);
                     ctx.drawImage(gameover,-60,-60);
                     var died = document.createElement("audio");
-                    died.setAttribute("src","died.mp3");
+                    died.setAttribute("src","Musics/died.mp3");
                     died.play()
                 },1000)
                 setTimeout(()=>document.querySelector("#restart").removeAttribute("style"),2000);

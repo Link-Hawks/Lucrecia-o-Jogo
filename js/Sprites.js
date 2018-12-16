@@ -4,21 +4,22 @@ class Sprites{
     constructor(diretorio,golpeEspecial1Direita,golpeEspecial1Esquerda){
         this.img = new Image();
         this.diretorio = diretorio;
-        this._esquerda = "img/"+diretorio+"/esquerda.png";
-        this._direita = "img/"+diretorio+"/direita.png";
-        this._puloEsquerda = "img/"+diretorio+"/puloEsquerda.png";
-        this._puloDireita = "img/"+diretorio+"/puloDireita.png";
-        this._socoEsquerda = "img/"+diretorio+"/socoEsquerda.png";
-        this._socoDireita = "img/"+diretorio+"/socoDireita.png";
-        this._baixoEsquerda = "img/"+diretorio+"/baixoEsquerda.png";
-        this._baixoDireita = "img/"+diretorio+"/baixoDireita.png";
-        this._chuteEsquerda = "img/"+diretorio+"/chuteEsquerda.png";
-        this._chuteDireita = "img/"+diretorio+"/chuteDireita.png";
-        this._defesaEsquerda = ["img/"+diretorio+"/defesaEsquerda.png"];
-        this._defesaDireita = "img/"+diretorio+"/defesaDireita.png";
-        this._golpeEspecial1Direita = "img/"+diretorio+"/"+golpeEspecial1Direita+".png";
-        this._golpeEspecial1Esquerda = "img/"+diretorio+"/"+golpeEspecial1Esquerda+".png";
-        this._golpeEspecial2 = ["img/"+diretorio+"/especial0.png","img/"+diretorio+"/especial1.png","img/"+diretorio+"/especial2.png","img/"+diretorio+"/especial3.png","img/"+diretorio+"/especial4.png"];
+        this.caminhoRelativo = `img/game/${diretorio}`;
+        this._esquerda = this.caminhoRelativo+"/esquerda.png";
+        this._direita = this.caminhoRelativo+"/direita.png";
+        this._puloEsquerda = this.caminhoRelativo+"/puloEsquerda.png";
+        this._puloDireita = this.caminhoRelativo+"/puloDireita.png";
+        this._socoEsquerda = this.caminhoRelativo+"/socoEsquerda.png";
+        this._socoDireita = this.caminhoRelativo+"/socoDireita.png";
+        this._baixoEsquerda = this.caminhoRelativo+"/baixoEsquerda.png";
+        this._baixoDireita = this.caminhoRelativo+"/baixoDireita.png";
+        this._chuteEsquerda = this.caminhoRelativo+"/chuteEsquerda.png";
+        this._chuteDireita = this.caminhoRelativo+"/chuteDireita.png";
+        this._defesaEsquerda = [this.caminhoRelativo+"/defesaEsquerda.png"];
+        this._defesaDireita = this.caminhoRelativo+"/defesaDireita.png";
+        this._golpeEspecial1Direita = this.caminhoRelativo+"/"+golpeEspecial1Direita+".png";
+        this._golpeEspecial1Esquerda = this.caminhoRelativo+"/"+golpeEspecial1Esquerda+".png";
+        this._golpeEspecial2 = [this.caminhoRelativo+"/especial0.png",this.caminhoRelativo+"/especial1.png",this.caminhoRelativo+"/especial2.png",this.caminhoRelativo+"/especial3.png",this.caminhoRelativo+"/especial4.png"];
         this.count=0;
     }
 

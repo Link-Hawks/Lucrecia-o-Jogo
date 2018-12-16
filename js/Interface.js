@@ -1,7 +1,7 @@
 //Podemos criar ainda outra classe apenas para as fontes, tornando o código mais manutenível.
 
 class Interface{
-    constructor(background, fonte="12px Arial", path="img/"+background+".jpg"){
+    constructor(background, fonte="12px Arial", path="img/game/"+background+".jpg"){
         this._fontePadrao = fonte;
         this._background = new Image();
         this._background.src = path;        
@@ -13,8 +13,8 @@ class Interface{
     }
 
     drawContador(){
-        this._tempo = 60-Math.floor(this._ciclo/120);
-        if(Math.floor(this._ciclo/120)<120){
+        this._tempo = 60-Math.floor(this._ciclo/60);
+        if(Math.floor(this._ciclo/60)<60){
             this.ciclo++;
         }
         this._contexto.fillStyle="#e9d700";

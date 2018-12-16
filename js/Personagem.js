@@ -108,7 +108,7 @@
 
             
             var audio = document.createElement("audio");
-            audio.setAttribute("src","punch.mp3");
+            audio.setAttribute("src","Musics/punch.mp3");
             audio.play();
             
             Inimigo.apertadoSoco = false;
