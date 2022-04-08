@@ -15,16 +15,16 @@
     start2.src = "start2.png";
 
     var mortoEsquerda= new Image();
-    mortoEsquerda.src = "img/player2/mortoEsquerda.png";
+    mortoEsquerda.src = "../game/images/player2/mortoEsquerda.png";
 
     var mortoDireita= new Image();
-    mortoDireita.src = "img/player2/mortoDireita.png";
+    mortoDireita.src = "../game/images/player2/mortoDireita.png";
 
     var mortoEsquerda1= new Image();
-    mortoEsquerda1.src = "img/player1/mortoEsquerda.png";
+    mortoEsquerda1.src = "../game/images/player1/mortoEsquerda.png";
 
     var mortoDireita1= new Image();
-    mortoDireita1.src = "img/player1/mortoDireita.png";
+    mortoDireita1.src = "../game/images/player1/mortoDireita.png";
 
     vitoriaPlayer2 = new Image();
     vitoriaPlayer2.src = "mito.png";
@@ -65,8 +65,8 @@
     
        
     function init(){
-        player1 = new Personagem("Player 1",50,100,new Sprites("player1","socoEsticadoDireita","socoEsticadoEsquerda"),3,150,155,"direita");
-        player2 = new Personagem("Player 2",50,100,new Sprites("player2","socoEsticadoDireita","socoEsticadoEsquerda"),3,350,155,"esquerda");
+        player1 = new Personagem("Player 1",50,100,new Sprites("../game/images/player1","socoEsticadoDireita","socoEsticadoEsquerda"),3,150,155,"direita");
+        player2 = new Personagem("Player 2",50,100,new Sprites("../game/images/player2","socoEsticadoDireita","socoEsticadoEsquerda"),3,350,155,"esquerda");
         interfacea = new Interface("background");
         ciclo = 0;
         document.querySelector("#joystick").setAttribute("style","display:none");
