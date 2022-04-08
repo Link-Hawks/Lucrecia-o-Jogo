@@ -58,7 +58,7 @@
         document.querySelector("#controle").removeAttribute("style");
         usandoJoystick = true;
         scriptJoystick = document.createElement("script");
-        scriptJoystick.src = "js/gamepadtest.js";
+        scriptJoystick.src = "./gamepadtest.js";
         document.body.appendChild(scriptJoystick);
         scriptJoystick.onload = ()=>init();
     }
