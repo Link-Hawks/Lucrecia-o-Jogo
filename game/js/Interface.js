@@ -1,7 +1,7 @@
 //Podemos criar ainda outra classe apenas para as fontes, tornando o código mais manutenível.
 
 class Interface{
-    constructor(background, fonte="12px Arial", path="img/"+background+".jpg"){
+    constructor(background, fonte="12px Arial", path="images/"+background+".jpg"){
         this._fontePadrao = fonte;
         this._background = new Image();
         this._background.src = path;        
