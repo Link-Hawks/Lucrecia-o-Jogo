@@ -259,7 +259,7 @@
 
 @font-face {
                 font-family: "Joystix Monospace";
-                src: url('../joystix.ttf');
+                src: url('../fonts/joystix.ttf');
             }
             .botao{
                 font-family: "Joystix Monospace";
