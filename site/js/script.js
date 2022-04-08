@@ -41,7 +41,7 @@
     var i;
     var contador3;
     var bgm = document.createElement("audio");
-    bgm.setAttribute("src","Guren.mp3");
+    bgm.setAttribute("src","guren.mp3");
 
     
     var startMP3 = document.createElement("audio");
