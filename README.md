@@ -10,7 +10,7 @@ Javascript
 ### Como Iniciar o Projeto
 Para iniciar o projeto basta executar o seguinte comando na raiz do projeto:
 ```
-npx live-server ./site --port=8080
+npx live-server . --port=8080
 ``` 
 E caso não tenha aberto automaticamente, abrir o navegador no seguinte url: 
 ```
