@@ -17,7 +17,7 @@ class ColisaoHelper{
         if(inimigoDireita || inimigoEsquerda){
             
             var audio = document.createElement("audio");
-            audio.setAttribute("src","punch.mp3");
+            audio.setAttribute("src","../../game/audio/punch.mp3");
             audio.play();
         }
 

@@ -37,11 +37,11 @@
     var tocarIniciou;
     
     var morreu = document.createElement("audio");
-    morreu.setAttribute("src","morreu.mp3");
+    morreu.setAttribute("src","../game/audio/morreu.mp3");
     var i;
     var contador3;
     var bgm = document.createElement("audio");
-    bgm.setAttribute("src","guren.mp3");
+    bgm.setAttribute("src","../game/audio/guren.mp3");
 
     
     var startMP3 = document.createElement("audio");
@@ -72,7 +72,7 @@
         document.querySelector("#joystick").setAttribute("style","display:none");
         document.querySelector("#teclado").setAttribute("style","display:none");
        
-        startMP3.setAttribute("src","start.mp3");
+        startMP3.setAttribute("src","../game/audio/start.mp3");
         startMP3.loop = true;
         startMP3.volume = 0.3;
         startMP3.play();
@@ -200,7 +200,7 @@
                     ctx.clearRect(0,0,cnv.width,cnv.height);
                     ctx.drawImage(gameover,-60,-60);
                     var died = document.createElement("audio");
-                    died.setAttribute("src","died.mp3");
+                    died.setAttribute("src","../game/audio/died.mp3");
                     died.play()
                 },1000)
                 setTimeout(()=>document.querySelector("#restart").removeAttribute("style"),2000);
