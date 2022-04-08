@@ -9,10 +9,10 @@
     let botoes = new Teclas();
 
     var start = new Image();
-    start.src = "start.png";
+    start.src = "../game/images/screens/start.png";
 
     var start2 = new Image();
-    start2.src = "start2.png";
+    start2.src = "../game/images/screens/start2.png";
 
     var mortoEsquerda= new Image();
     mortoEsquerda.src = "../game/images/player2/mortoEsquerda.png";
@@ -27,10 +27,10 @@
     mortoDireita1.src = "../game/images/player1/mortoDireita.png";
 
     vitoriaPlayer2 = new Image();
-    vitoriaPlayer2.src = "mito.png";
+    vitoriaPlayer2.src = "../game/images/player2/mito.png";
     
     vitoriaPlayer1 = new Image();
-    vitoriaPlayer1.src = "mito2.png";
+    vitoriaPlayer1.src = "../game/images/player1/mito2.png";
     
 
     var tocarMorte;
@@ -58,7 +58,7 @@
         document.querySelector("#controle").removeAttribute("style");
         usandoJoystick = true;
         scriptJoystick = document.createElement("script");
-        scriptJoystick.src = "gamepadtest.js";
+        scriptJoystick.src = "./gamepadtest.js";
         document.body.appendChild(scriptJoystick);
         scriptJoystick.onload = ()=>init();
     }
@@ -195,7 +195,7 @@
             else{
                 bgm.pause();
                 var gameover = new Image();
-                gameover.src = "gameover.png";
+                gameover.src = "../game/images/screens/gameover.png";
                 setTimeout(()=>    {
                     ctx.clearRect(0,0,cnv.width,cnv.height);
                     ctx.drawImage(gameover,-60,-60);
